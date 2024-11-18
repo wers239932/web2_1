@@ -113,7 +113,14 @@
             <path d="M 200 200 L 200 350 A 150 150 0 0 1 50 200 Z" fill-opacity="0.6" stroke="black"
                   fill="blue"></path>
 
-            <circle class="template" r="8" R="8" X="0" Y="0" cx="200" cy="200" fill-opacity="0.8" fill="#3549fc"
+            <c:forEach var="res" items="${history.history.reversed()}">
+                <circle r="8" R="8" X="${res.point().x}" Y="${res.point().y}"
+                        cx="${200+res.point().x/res.point().r*150}" cy="${200-res.point().y/res.point().r*150}"
+                        fill-opacity="0.8" fill="#3549fc" stroke="#4d00b8"
+                        visibility="visible"></circle>
+            </c:forEach>
+
+            <circle class="template" r="8" R="8" X="0" Y="0" cx="200" cy="200" fill-opacity="0.8" fill="#ff49fc"
                     stroke="#4d00b8"
                     visibility="hidden"></circle>
         </svg>

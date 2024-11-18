@@ -18,7 +18,7 @@ function checkR(r) {
     return !isNaN(r) && r >= 1 && r <= 4;
 }
 
-function changePoint(x,y,r) {
+function changeCoords(x,y,r) {
     if(checkX(x) && checkY(y) && checkR(r)) {
         changeX(x);
         changeY(y);
@@ -50,6 +50,7 @@ function changeY(y) {
 function changeR(r) {
     console.log(r+" "+R);
     if(checkR(r)) {
+        redraw(r);
         R = r;
         document.getElementById("r").value = R;
         document.getElementById("currR").textContent = (1 * R).toFixed(2);
@@ -118,7 +119,12 @@ async function ooops(response) {
 
 
 function drawPoint(x, y, r) {
-    let newPoint = document.querySelector(".template");
+    let newPoint = document.querySelector(".template").cloneNode(true);
+    document.querySelectorAll("[last='true']").forEach((node)=>{
+        document.querySelector("svg").removeChild(node);
+    });
+    newPoint.setAttribute('last', 'true');
+    document.querySelector("svg").appendChild(newPoint);
     newPoint.setAttribute("X", x);
     newPoint.setAttribute("Y", y);
     newPoint.setAttribute("R", r);
@@ -131,9 +137,9 @@ function redraw(r) {
     points.forEach(function (point) {
         let x = Number.parseFloat(point.getAttribute("x"));
         let y = Number.parseFloat(point.getAttribute("y"));
-        point.setAttribute("r", r);
+        point.setAttribute("R", r);
         point.setAttribute("cx", 200+x/r*150);
-        point.setAttribute("cy", 200+y/r*150);
+        point.setAttribute("cy", 200-y/r*150);
     })
 }
 
@@ -151,7 +157,7 @@ function handleSvgClick(event) {
     console.log(event.clientX, event.clientY, rect.height)
     const x = event.clientX - rect.left - rect.width/2;
     const y = -(event.clientY - rect.top - rect.height/2);
-    changePoint(x / (150) * R, y / (150) * R, R);
+    changeCoords(x / (150) * R, y / (150) * R, R);
     drawPoint(X, Y, R);
 }
 document.getElementById('svg').addEventListener('click',handleSvgClick);
