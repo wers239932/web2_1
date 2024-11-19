@@ -7,10 +7,10 @@ public class Validator {
         double x = point.x;
         double y = point.y;
         double R = point.r;
-        if (x >= 0 && y >= 0) return x+y<=R/2;
+        if (x >= 0 && y >= 0) return x + y <= R / 2;
         if (x >= 0 && y < 0) return false;
         if (x < 0 && y < 0) return x * x + y * y <= R * R;
-        return x>-R/2 && y<R/2;
+        return x > -R / 2 && y < R / 2;
     }
 
     private static Boolean validateParam(int param, int min, int max) {

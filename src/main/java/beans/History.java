@@ -4,7 +4,7 @@ import java.beans.Beans;
 import java.util.ArrayList;
 
 public class History extends Beans {
-    private ArrayList<Result> history = new ArrayList<>();
+    private final ArrayList<Result> history;
 
     public History() {
         this.history = new ArrayList<>();

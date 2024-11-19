@@ -65,11 +65,11 @@
             </div>
 
             <div>Введите вторую координату</div>
-            <div><input class="illuminated animated" type="text" placeholder="(от -5 до 3)" id="y"></div>
+            <div><label for="y"></label><input class="illuminated animated" type="text" placeholder="(от -5 до 3)" id="y"></div>
 
 
             <div>Выберите масштаб карты</div>
-            <div><input class="illuminated animated" type="text" placeholder="(от 1 до 4)" id="r"></div>
+            <div><label for="r"></label><input class="illuminated animated" type="text" placeholder="(от 1 до 4)" id="r"></div>
 
 
             <div class="longRow">выбранные координаты: (<span id="currX">1</span>, <span id="currY">2</span>, <span
@@ -136,7 +136,8 @@
                 <th>Результат</th>
             </tr>
             <tbody>
-            <c:forEach var="res" items="${history.history}">
+<%--suppress ELValidationInspection --%>
+<c:forEach var="res" items="${history.history}">
                 <tr>
                     <td>${res.getTime()}</td>
                     <td>${Math.round(res.point().x*100)/100}</td>

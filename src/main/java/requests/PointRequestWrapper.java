@@ -6,7 +6,7 @@ import validation.PointWithScale;
 
 
 public class PointRequestWrapper extends HttpServletRequestWrapper {
-    private PointWithScale point;
+    private final PointWithScale point;
 
     public PointRequestWrapper(HttpServletRequest request, PointWithScale point) {
         super(request);
