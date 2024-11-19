@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import requests.PointRequestWrapper;
 import validation.PointWithScale;
+import validation.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,9 +36,14 @@ public class ControllerServlet extends HttpServlet {
             HashMap<?, ?> json = new ObjectMapper().readValue(inputStream, HashMap.class);
             System.out.println("json = " + json.entrySet());
             //response.sendError(HttpStatus.BAD_REQUEST.getCode(), json.keySet().toString());
-                PointWithScale point = PointWithScale.getFromJson(json);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/check");
-            rd.forward(new PointRequestWrapper(request, point), response);
+            PointWithScale point = PointWithScale.getFromJson(json);
+            if(Validator.validate(point)) {
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/check");
+                rd.forward(new PointRequestWrapper(request, point), response);
+            }
+            else {
+                response.sendError(response.SC_BAD_REQUEST);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

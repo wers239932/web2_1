@@ -17,7 +17,7 @@
             <th>Результат</th>
         </tr>
         <tbody>
-        <c:forEach var="res" items="${history.history.reversed()}">
+        <c:forEach var="res" items="${history.history}">
             <tr>
                 <td>${res.getTime()}</td>
                 <td>${Math.round(res.point().x*100)/100}</td>

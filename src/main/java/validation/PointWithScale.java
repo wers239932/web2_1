@@ -13,11 +13,11 @@ public class PointWithScale {
         this.r = r;
     }
 
-    @Validatable(min = -3, max = 5)
+    @Validatable(min = -5, max = 3)
     public final double x;
     @Validatable(min = -5, max = 3)
     public final double y;
-    @Validatable(min = 1, max = 5)
+    @Validatable(min = 1, max = 4)
     public final double r;
 
     public static PointWithScale parse(String x, String y, String r) throws NumberFormatException {

@@ -60,13 +60,13 @@ function changeR(r) {
     }
 }
 
-document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+document.querySelectorAll('input[type="radio"]').forEach((box) => {
 
-    checkbox.addEventListener('change', function() {
+    box.addEventListener('change', function() {
         changeX(this.value);
         drawPoint(X, Y, R);
         if (this.checked) {
-            document.querySelectorAll('input[type="checkbox"]').forEach((box) => {
+            document.querySelectorAll('input[type="radio"]').forEach((box) => {
                 if (box !== this) {
                     box.checked = false;
                 }
@@ -150,7 +150,7 @@ function handleSvgClick(event) {
     } else if(status.textContent !== ""){
         status.textContent = "";
     }
-    document.querySelectorAll('input[type="checkbox"]').forEach((box) => {
+    document.querySelectorAll('input[type="radio"]').forEach((box) => {
             box.checked = false;
     });
     const rect = document.getElementById('svg').getBoundingClientRect();

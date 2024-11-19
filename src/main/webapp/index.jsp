@@ -26,39 +26,39 @@
             <div>
                 <div>
                     <label>
-                        <input type="checkbox" name="x" id="x-5" value="-5">
+                        <input type="radio" name="x" id="x-5" value="-5">
                         -5
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x-4" value="-4">
+                        <input type="radio" name="x" id="x-4" value="-4">
                         -4
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x-3" value="-3">
+                        <input type="radio" name="x" id="x-3" value="-3">
                         -3
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x-2" value="-2">
+                        <input type="radio" name="x" id="x-2" value="-2">
                         -2
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x-1" value="-1">
+                        <input type="radio" name="x" id="x-1" value="-1">
                         -1
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x0" value="0">
+                        <input type="radio" name="x" id="x0" value="0">
                         0
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x1" value="1">
+                        <input type="radio" name="x" id="x1" value="1">
                         1
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x2" value="2">
+                        <input type="radio" name="x" id="x2" value="2">
                         2
                     </label>
                     <label>
-                        <input type="checkbox" name="x" id="x3" value="3">
+                        <input type="radio" name="x" id="x3" value="3">
                         3
                     </label>
                 </div>
@@ -113,7 +113,7 @@
             <path d="M 200 200 L 200 350 A 150 150 0 0 1 50 200 Z" fill-opacity="0.6" stroke="black"
                   fill="blue"></path>
 
-            <c:forEach var="res" items="${history.history.reversed()}">
+            <c:forEach var="res" items="${history.history}">
                 <circle r="8" R="8" X="${res.point().x}" Y="${res.point().y}"
                         cx="${200+res.point().x/res.point().r*150}" cy="${200-res.point().y/res.point().r*150}"
                         fill-opacity="0.8" fill="#3549fc" stroke="#4d00b8"
@@ -136,7 +136,7 @@
                 <th>Результат</th>
             </tr>
             <tbody>
-            <c:forEach var="res" items="${history.history.reversed()}">
+            <c:forEach var="res" items="${history.history}">
                 <tr>
                     <td>${res.getTime()}</td>
                     <td>${Math.round(res.point().x*100)/100}</td>
