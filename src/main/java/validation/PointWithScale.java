@@ -2,7 +2,9 @@ package validation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PointWithScale {
@@ -26,6 +28,15 @@ public class PointWithScale {
     @SuppressWarnings("rawtypes")
     public static PointWithScale getFromJson(HashMap vars) throws NumberFormatException {
         return parse(vars.get("X").toString(), vars.get("Y").toString(), vars.get("R").toString());
+    }
+
+    public static ArrayList<PointWithScale> getArrayFromJson(ObjectNode node) {
+        ArrayList<PointWithScale> array = new ArrayList<>();
+        node.get("points").fields().forEachRemaining(field -> {
+           PointWithScale point = new PointWithScale(node.get("X").asDouble(), node.get("Y").asDouble(), node.get("R").asDouble());
+           array.add(point);
+        });
+        return array;
     }
 
     @SuppressWarnings("unused")

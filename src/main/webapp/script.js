@@ -4,6 +4,14 @@ let R = 1;
 
 let status = document.getElementById('status');
 
+class Point {
+    constructor(x,y,r) {
+        this.x=x;
+        this.y=y;
+        this.r=r;
+    }
+}
+
 changeX(0);
 changeY(0);
 changeR(1);
@@ -18,6 +26,33 @@ function checkY(y) {
 
 function checkR(r) {
     return !isNaN(r) && r >= 1 && r <= 4;
+}
+
+async function sendPoints(points, toUpdate) {
+    const request = {
+        "update": ''+toUpdate
+    };
+    request.array=points;
+    params = {
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': JSON.stringify(request).length
+        },
+        body: JSON.stringify(request)
+    };
+    let response = await fetch('http://localhost:8080/web2_1-1.0-SNAPSHOT/controller', params);
+    //console.log(params);
+    if (response.ok) {
+        if (response.url) {
+            window.location.href = response.url;
+        } else {
+            
+        }
+    } else {
+        await ooops(response);
+    }
 }
 
 function changeCoords(x, y, r) {

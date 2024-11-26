@@ -4,16 +4,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import validation.PointWithScale;
 
+import java.util.ArrayList;
+
 
 public class PointRequestWrapper extends HttpServletRequestWrapper {
-    private final PointWithScale point;
+    private final ArrayList<PointWithScale> points;
+    public Boolean getResults;
 
-    public PointRequestWrapper(HttpServletRequest request, PointWithScale point) {
+    public PointRequestWrapper(HttpServletRequest request, ArrayList<PointWithScale> points, Boolean results) {
         super(request);
-        this.point = point;
+        this.points = points;
+        this.getResults=results;
     }
 
-    public PointWithScale getPoint() {
-        return point;
-    }
+    public ArrayList<PointWithScale> getPoints() {return points;}
 }

@@ -1,6 +1,7 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,9 @@ import validation.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class ControllerServlet extends HttpServlet {
@@ -30,16 +33,24 @@ public class ControllerServlet extends HttpServlet {
         InputStream inputStream = request.getInputStream();
         String err = "234";
         try {
-            HashMap<?, ?> json = new ObjectMapper().readValue(inputStream, HashMap.class);
-            System.out.println("json = " + json.entrySet());
-            //response.sendError(HttpStatus.BAD_REQUEST.getCode(), json.keySet().toString());
-            PointWithScale point = PointWithScale.getFromJson(json);
-            if (Validator.validate(point)) {
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/check");
-                rd.forward(new PointRequestWrapper(request, point), response);
+//            HashMap<?, ?> json = new ObjectMapper().readValue(inputStream, HashMap.class);
+//            System.out.println("json = " + json.entrySet());
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode node = (ObjectNode) mapper.readTree(inputStream);
+            ArrayList<PointWithScale> points;
+            System.out.println("/n /n /n /n /n /n /n /n /n /n");
+            node.fields().forEachRemaining(no -> System.out.println(no.getKey() + ": " + no.getValue()));
+            System.out.println("/n /n /n /n /n /n /n /n /n /n");
+            System.out.println(node.fields());
+            points = PointWithScale.getArrayFromJson(node);
+            PointRequestWrapper requestWrapper;
+            if(Objects.equals(node.get("update").asText(), "true")) {
+                requestWrapper = new PointRequestWrapper(request, points, false);
             } else {
-                response.sendError(response.SC_BAD_REQUEST);
+                requestWrapper = new PointRequestWrapper(request, points, true);
             }
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/check");
+            rd.forward(requestWrapper, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendError(response.SC_BAD_REQUEST, err);
