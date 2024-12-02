@@ -9,13 +9,15 @@ import java.util.ArrayList;
 
 public class PointRequestWrapper extends HttpServletRequestWrapper {
     private final ArrayList<PointWithScale> points;
-    public Boolean getResults;
+    public final Boolean getResults;
 
     public PointRequestWrapper(HttpServletRequest request, ArrayList<PointWithScale> points, Boolean results) {
         super(request);
         this.points = points;
-        this.getResults=results;
+        this.getResults = results;
     }
 
-    public ArrayList<PointWithScale> getPoints() {return points;}
+    public ArrayList<PointWithScale> getPoints() {
+        return points;
+    }
 }

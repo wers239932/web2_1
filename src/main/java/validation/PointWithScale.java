@@ -2,10 +2,8 @@ package validation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PointWithScale {
     public PointWithScale(double x, double y, double r) {
@@ -21,21 +19,14 @@ public class PointWithScale {
     @Validatable(min = 1, max = 4)
     public final double r;
 
-    public static PointWithScale parse(String x, String y, String r) throws NumberFormatException {
-        return new PointWithScale(Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(r));
-    }
 
-    @SuppressWarnings("rawtypes")
-    public static PointWithScale getFromJson(HashMap vars) throws NumberFormatException {
-        return parse(vars.get("X").toString(), vars.get("Y").toString(), vars.get("R").toString());
-    }
 
-    public static ArrayList<PointWithScale> getArrayFromJson(ObjectNode node) {
+    public static ArrayList<PointWithScale> getArrayFromJson(JsonNode node) {
         ArrayList<PointWithScale> array = new ArrayList<>();
-        node.get("points").fields().forEachRemaining(field -> {
-           PointWithScale point = new PointWithScale(node.get("X").asDouble(), node.get("Y").asDouble(), node.get("R").asDouble());
-           array.add(point);
-        });
+        for (JsonNode entry : node) {
+            PointWithScale point = new PointWithScale(entry.get("X").asDouble(), entry.get("Y").asDouble(), entry.get("R").asDouble());
+            array.add(point);
+        }
         return array;
     }
 

@@ -13,12 +13,8 @@ public class Validator {
         return x > -R / 2 && y < R / 2;
     }
 
-    private static Boolean validateParam(int param, int min, int max) {
-        return param > min && param < max;
-    }
-
     private static Boolean validateParam(double param, int min, int max) {
-        return param > min && param < max;
+        return param >= min && param <= max;
     }
 
     public static boolean validate(PointWithScale point) {

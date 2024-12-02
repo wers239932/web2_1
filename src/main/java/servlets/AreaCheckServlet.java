@@ -2,10 +2,9 @@ package servlets;
 
 import beans.History;
 import beans.Result;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,7 +12,6 @@ import requests.PointRequestWrapper;
 import validation.PointWithScale;
 import validation.Validator;
 
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,24 +33,12 @@ public class AreaCheckServlet extends HttpServlet {
                 req.getSession().setAttribute("history", history);
             }
             ArrayList<PointWithScale> points = req.getPoints();
-
-            for(PointWithScale point : points) {
-                if(Validator.validate(point)) {
-                    Boolean fitsIn = Validator.check(point);
-                    Result result = new Result(point, fitsIn, LocalDateTime.now(), System.nanoTime() - startTime);
-                    history.add(result);
-                }
-            }
-
-            req.getSession().setAttribute("history", history);
-//            for (Result result1 : ((History) req.getSession().getAttribute("history")).getHistory()) {
-//                System.out.println(result1);
-//            }
+            System.out.println(points.size());
 
             System.out.println("doCheck");
-            if(req.getResults) {
-                for(PointWithScale point : points) {
-                    if(Validator.validate(point)) {
+            if (req.getResults) {
+                for (PointWithScale point : points) {
+                    if (Validator.validate(point)) {
                         Boolean fitsIn = Validator.check(point);
                         Result result = new Result(point, fitsIn, LocalDateTime.now(), System.nanoTime() - startTime);
                         history.add(result);
@@ -64,8 +50,8 @@ public class AreaCheckServlet extends HttpServlet {
             } else {
                 PrintWriter out = response.getWriter();
                 ArrayList<Result> results = new ArrayList<>();
-                for(PointWithScale point : points) {
-                    if(Validator.validate(point)) {
+                for (PointWithScale point : points) {
+                    if (Validator.validate(point)) {
                         Boolean fitsIn = Validator.check(point);
                         Result result = new Result(point, fitsIn, LocalDateTime.now(), System.nanoTime() - startTime);
                         results.add(result);
@@ -73,7 +59,9 @@ public class AreaCheckServlet extends HttpServlet {
                     }
                 }
                 req.getSession().setAttribute("history", history);
-                new ObjectMapper().writeValue(out, results);
+                ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+                String json = mapper.writer().withDefaultPrettyPrinter().writeValueAsString(results);
+                out.println(json);
 
             }
 

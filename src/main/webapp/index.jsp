@@ -13,9 +13,9 @@
 <body>
 <header>
     <div class="header-content">
-        <h1>Лабораторная работа по вебу №1</h1>
+        <h1>Лабораторная работа по вебу №2</h1>
         <h2>Багманов Владимир Алексеевич</h2>
-        <h2>Группа P3230, Вариант №408190</h2>
+        <h2>Группа P3230, Вариант №408215</h2>
     </div>
 </header>
 <div id="mainTable">
@@ -65,19 +65,21 @@
             </div>
 
             <div>Введите вторую координату</div>
-            <div><label for="y"></label><input class="illuminated animated" type="text" placeholder="(от -5 до 3)" id="y"></div>
+            <div><label for="y"></label><input class="illuminated animated" type="text" placeholder="(от -5 до 3)"
+                                               id="y"></div>
 
 
             <div>Выберите масштаб карты</div>
-            <div><label for="r"></label><input class="illuminated animated" type="text" placeholder="(от 1 до 4)" id="r"></div>
+            <div><label for="r"></label><input class="illuminated animated" type="text" placeholder="(от 1 до 4)"
+                                               id="r"></div>
 
 
-            <div class="longRow">выбранные координаты: (<span id="currX">1</span>, <span id="currY">2</span>, <span
-                    id="currR">3</span>)
+            <div class="longRow">выбранные координаты: (<span id="currX">0</span>, <span id="currY">0</span>, <span
+                    id="currR">1</span>)
             </div>
 
             <div class="longRow">
-                <button onclick="send()">Проверить</button>
+                <button onclick="sendGetHistory()">Проверить</button>
             </div>
             <span class="longRow" id="status">
       </span>
@@ -113,22 +115,22 @@
             <path d="M 200 200 L 200 350 A 150 150 0 0 1 50 200 Z" fill-opacity="0.6" stroke="black"
                   fill="blue"></path>
 
-            <c:forEach var="res" items="${history.history}">
-                <circle r="8" R="8" X="${res.point().x}" Y="${res.point().y}"
-                        cx="${200+res.point().x/res.point().r*150}" cy="${200-res.point().y/res.point().r*150}"
-                        fill-opacity="0.8" fill="#3549fc" stroke="#4d00b8"
-                        visibility="visible"></circle>
-            </c:forEach>
+            <%--            <c:forEach var="res" items="${history.history}">--%>
+            <%--                <circle r="8" R="8" x="${res.point().x}" y="${res.point().y}"--%>
+            <%--                        cx="${200+res.point().x/res.point().r*150}" cy="${200-res.point().y/res.point().r*150}"--%>
+            <%--                        fill-opacity="0.8" fill="#3549fc" stroke="#4d00b8"--%>
+            <%--                        visibility="visible"></circle>--%>
+            <%--            </c:forEach>--%>
 
-            <circle class="template" r="8" R="8" X="0" Y="0" cx="200" cy="200" fill-opacity="0.8" fill="#ff49fc"
+            <circle class="template" r="8" R="8" x="0" y="0" cx="200" cy="200" fill-opacity="0.8" fill="#ff49fc"
                     stroke="#4d00b8"
                     visibility="hidden"></circle>
         </svg>
     </div>
 
     <h4>
-        <table class="history" id="history">
-            <tr class="thead">
+        <table class="history">
+            <tr class="thead" id="history">
                 <th>Время</th>
                 <th>X</th>
                 <th>Y</th>
@@ -136,10 +138,10 @@
                 <th>Результат</th>
             </tr>
             <tbody>
-<%--suppress ELValidationInspection --%>
-<c:forEach var="res" items="${history.history}">
+            <%--suppress ELValidationInspection --%>
+            <c:forEach var="res" items="${history.history}"><%--@elvariable id="Math" type="jdk"--%>
                 <tr>
-                    <td>${res.getTime()}</td>
+                    <td>${res.time}</td>
                     <td>${Math.round(res.point().x*100)/100}</td>
                     <td>${Math.round(res.point().y*100)/100}</td>
                     <td>${Math.round(res.point().r*100)/100}</td>

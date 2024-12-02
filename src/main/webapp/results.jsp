@@ -17,9 +17,9 @@
             <th>Результат</th>
         </tr>
         <tbody>
-        <c:forEach var="res" items="${history.history}">
+        <c:forEach var="res" items="${history.history}"><%--@elvariable id="Math" type="jdk"--%>
             <tr>
-                <td>${res.getTime()}</td>
+                <td>${res.time}</td>
                 <td>${Math.round(res.point().x*100)/100}</td>
                 <td>${Math.round(res.point().y*100)/100}</td>
                 <td>${Math.round(res.point().r*100)/100}</td>

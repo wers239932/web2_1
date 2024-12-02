@@ -19,4 +19,5 @@ public record Result(
     public String getTime() {
         return timeSent.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
 }
